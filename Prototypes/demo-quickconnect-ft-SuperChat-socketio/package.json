@@ -1,9 +1,9 @@
 {
-  "name": "rtcio-demo-quickconnect-ft-socket.io",
-  "description": "Fusion de la demo quickconnect et du super chat socket.io",
-  "author": "Val <polskataga@gmail.com>",
+  "name": "rtcio-demo-quickconnect",
+  "description": "A super simple example for working with WebRTC",
+  "author": "Damon Oehlman <damon.oehlman@nicta.com.au>",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.0.0",
   "dependencies": {
     "browserify-middleware": "^3",
     "cog": "^1.0.0",
@@ -20,12 +20,22 @@
 	"ent": "~0.1.0"
   },
   "devDependencies": {},
+  "scripts": {
+    "new-chrome": "google-chrome --user-data-dir=$HOME/.config/chrome-test --use-fake-device-for-media-stream http://localhost:3000 &",
+    "start": "DEBUG=rtc* node server.js",
+    "gendocs": "gendocs > README.md"
+  },
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rtc-io/rtcio-demo-quickconnect.git"
+  },
   "keywords": [
     "webrtc",
     "rtc.io"
-	"rtc-quickconnect"
-	"socket.io"
   ],
   "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/rtc-io/rtcio-demo-quickconnect/issues"
+  }
 }
