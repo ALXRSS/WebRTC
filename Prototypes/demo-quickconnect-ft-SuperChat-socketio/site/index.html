@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>rtcio-demo-quickconnect</title>
+<link rel="stylesheet" href="../../layout.css" />
+</head>
+<body>
+<div class="layout layout-hz">
+	<div class="chat">
+		<!--<h4>Chat</h4>
+		<input type="text" id="commandInput" placeholder="Type something"/>
+		<ul class="message-list" id="messageList"></ul>-->
+		<h1>Le super Chat temps réel !</h1>
+
+        <form action="/" method="post" id="formulaire_chat">
+            <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+            <input type="submit" id="envoi_message" value="Envoyer" />
+        </form>
+
+        <section id="zone_chat">
+            
+        </section>
+	</div>
+	<div class="layout">	
+		<div class="container">
+			<div class="remote"></div>
+			<div class="remote"></div>
+		</div>
+		<div class="local"></div>		
+	</div>
+</div>
+<script src="../../rtc.io/primus.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../../index.js"></script>
+</body>
+</html>
