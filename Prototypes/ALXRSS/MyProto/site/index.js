@@ -11,10 +11,6 @@ var room = location.pathname.replace(reRoomName, '$1').replace('/', '');
 var local = qsa('.local')[0];
 var remotes = qsa('.remote');
 
-// get the message list DOM element
-var messages = qsa('#messageList')[0];
-var chat = qsa('#commandInput')[0];
-
 // data channel & peers
 var channel;
 var peerMedia = {};
@@ -38,8 +34,8 @@ var localMedia = media({
 });
 
 // Connexion à socket.io
-            var socket = io.connect('localhost:3000');
-			prompt('Location.href = '+location.href + '../../'+':3000');
+            var socket = io.connect('http://'+location.hostname + ':3000');
+			alert('Location.href = '+location.hostname + ':3000');
 
             // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
             var pseudo = prompt('Quel est votre pseudo ?');
@@ -53,21 +49,28 @@ var localMedia = media({
 
             // Quand un nouveau client se connecte, on affiche l'information
             socket.on('nouveau_client', function(pseudo) {
-                $('#zone_chat').prepend('<p><em>' + pseudo + ' a rejoint le Chat !</em></p>');
+                $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
+                $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
+
             })
+
 
             // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
             $('#formulaire_chat').submit(function () {
                 var message = $('#message').val();
                 socket.emit('message', message); // Transmet le message aux autres
-                insereMessage(pseudo, message); // Affiche le message aussi sur notre page
+                insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
                 $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
                 return false; // Permet de bloquer l'envoi "classique" du formulaire
             });
             
-            // Ajoute un message dans la page
+            // Ajoute un message venant de l'exterieur
             function insereMessage(pseudo, message) {
-                $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
+                $('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+            }
+            // Ajoute un message interne dans la page
+            function insereMyMessage(pseudo, message) {
+                $('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
             }
 
 // render a remote video
