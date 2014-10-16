@@ -1,0 +1,41 @@
+{
+  "name": "MyProto",
+  "description": "Proto WebRTC",
+  "author": "Alexandre ROUSSEAU",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "browserify-middleware": "^3",
+    "cog": "^1.0.0",
+    "crel": "^2.1.5",
+    "express": "^4",
+    "fdom": "^0.8.0",
+    "nib": "^1",
+    "rtc-captureconfig": "^2.0.0",
+    "rtc-media": "^1",
+    "rtc-quickconnect": "^3.0.0",
+    "rtc-switchboard": "~0.10.1",
+    "stylus": "^0.49.1",
+	"socket.io": "~0.9.16",
+	"ent": "~0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "new-chrome": "google-chrome --user-data-dir=$HOME/.config/chrome-test --use-fake-device-for-media-stream http://localhost:3000 &",
+    "start": "DEBUG=rtc* node server.js",
+    "gendocs": "gendocs > README.md"
+  },
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rtc-io/rtcio-demo-quickconnect.git"
+  },
+  "keywords": [
+    "webrtc",
+    "rtc.io"
+  ],
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/rtc-io/rtcio-demo-quickconnect/issues"
+  }
+}
