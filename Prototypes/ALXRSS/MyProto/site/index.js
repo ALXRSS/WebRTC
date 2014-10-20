@@ -42,18 +42,25 @@ var localMedia = media({
             socket.emit('nouveau_client', pseudo);
             document.title = pseudo + ' - ' + document.title;
 
+/////////////
+            // On crée l'événement recupererParticipants pour récupérer directement les participants sur le serveur
+            socket.on('recupererParticipants', function(participants) {
+              // participants est le tableau contenant tous les participants qui ont été écris sur le serveur
+              for (var i = 0; i < participants.length; i++)
+                $('#list_parts').prepend('<li><em>' + participants[i] + '</em></li>');
+            });
+/////////////
+
+            // Quand un nouveau client se connecte, on affiche l'information
+            socket.on('nouveau_client', function(newPseudo) {
+                $('#list_chat').prepend('<li><em>' + newPseudo + ' a rejoint le Chat !</em></li>');
+                $('#list_parts').prepend('<li><em>' + newPseudo + '</em></li>');
+            })
+
             // Quand on reçoit un message, on l'insère dans la page
             socket.on('message', function(data) {
                 insereMessage(data.pseudo, data.message)
             })
-
-            // Quand un nouveau client se connecte, on affiche l'information
-            socket.on('nouveau_client', function(pseudo) {
-                $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
-                $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
-
-            })
-
 
             // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
             $('#formulaire_chat').submit(function () {

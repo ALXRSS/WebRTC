@@ -73,6 +73,9 @@ var ent = require('ent');
 // create the switchboard
 var switchboard = require('rtc-switchboard')(server);
 
+//
+var participants = [];
+
 // convert stylus stylesheets
 app.use(stylus.middleware({
   src: __dirname + '/site',
@@ -114,17 +117,17 @@ server.listen(serverPort, function(err) {
   console.log('running @ http://localhost:' + serverPort + '/');
 });
 
-// Chargement de la page index.html
-//app.get('/', function (req, res) {
-  //res.sendfile(__dirname + '/index.html');
-//});
 
 io.sockets.on('connection', function (socket, pseudo) {
+
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('nouveau_client', function(pseudo) {
         pseudo = ent.encode(pseudo);
         socket.set('pseudo', pseudo);
         socket.broadcast.emit('nouveau_client', pseudo);
+        participants.push(pseudo);
+            // On donne la liste des participants (événement créé du côté client)
+            socket.emit('recupererParticipants', participants);
     });
 
     // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
@@ -135,5 +138,3 @@ io.sockets.on('connection', function (socket, pseudo) {
         });
     }); 
 });
-
-//server.listen(3000);
