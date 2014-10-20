@@ -1,5 +1,5 @@
 {
-  "name": "WebRTC-client-leger",
+  "name": "WebRTC client leger",
   "description": "WebRTC client leger avec rtc-quickconnect et socket.io",
   "author": "Valerian DIEU, Emmanuel PETIT, Alexandre ROUSSEAU",
   "private": true,
