@@ -1,62 +1,3 @@
-/* jshint node: true */
-'use strict';
-
-/**
-  # rtcio-demo-quickconnect
-
-  This is a starter project for working with [WebRTC](http://webrtc.org).
-  This demo showcases how to use the following packages to build a
-  fully functional WebRTC application:
-
-  - [rtc-quickconnect](https://github.com/rtc-io/rtc-quickconnect)
-
-    The `rtc-quickconnect` package provides operations that make it simpler
-    to work with WebRTC peer connections.
-
-  - [rtc-media](https://github.com/rtc-io/rtc-media)
-
-    Media capture and rendering.
-
-  - [rtc-switchboard](https://github.com/rtc-io/rtc-switchboard)
-
-    A websocket powered signaling server that is used to help setup
-    peer connections between two clients.
-
-  ## Getting Started
-
-  First, clone this repository:
-
-  ```
-  git clone https://github.com/rtc-io/rtcio-demo-quickconnect.git
-  ```
-
-  Next, install node dependencies:
-
-  ```
-  cd rtcio-demo-quickconnect
-  npm install
-  ```
-
-  Once the dependencies have been installed, you should then be able to run
-  the demonstration server:
-
-  ```
-  npm start
-  ```
-
-  If everything has worked correctly, you should now be able to open your
-  browser to the following url:
-
-  <http://localhost:3000/>
-
-  You can test that you have WebRTC peer connections operating correctly by
-  opening two browser windows to the same url; or, you can find someone else
-  that has access to your machine and point them to: <http://your.ip:3000/>.
-  All being well you should be able to communicate with that person using
-  WebRTC!
-
-**/
-
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
@@ -105,20 +46,7 @@ app.get('/room/:roomname', function(req, res, next) {
   fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
 });
 
-// start the server
-server.listen(serverPort, function(err) {
-  if (err) {
-    return console.log('Encountered error starting server: ', err);
-  }
-
-  console.log('running @ http://localhost:' + serverPort + '/');
-});
-
-// Chargement de la page index.html
-//app.get('/', function (req, res) {
-  //res.sendfile(__dirname + '/index.html');
-//});
-
+// on utilise socket.io pour créer deux variables de session à transférer aux clients
 io.sockets.on('connection', function (socket, pseudo) {
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('nouveau_client', function(pseudo) {
@@ -136,4 +64,11 @@ io.sockets.on('connection', function (socket, pseudo) {
     }); 
 });
 
-//server.listen(3000);
+// start the server
+server.listen(serverPort, function(err) {
+  if (err) {
+    return console.log('Encountered error starting server: ', err);
+  }
+
+  console.log('running @ http://localhost:' + serverPort + '/');
+});

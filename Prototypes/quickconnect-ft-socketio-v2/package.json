@@ -1,9 +1,9 @@
 {
-  "name": "MyProto",
-  "description": "Proto WebRTC",
-  "author": "Alexandre ROUSSEAU",
+  "name": "WebRTC client leger",
+  "description": "WebRTC client leger avec rtc-quickconnect et socket.io",
+  "author": "Valerian DIEU, Emmanuel PETIT, Alexandre ROUSSEAU",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.2.0",
   "dependencies": {
     "browserify-middleware": "^3",
     "cog": "^1.0.0",

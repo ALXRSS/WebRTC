@@ -34,44 +34,42 @@ var localMedia = media({
 });
 
 // Connexion à socket.io
-            var socket = io.connect('http://'+location.hostname + ':3000');
-			alert('Location.href = '+location.hostname + ':3000');
+var socket = io.connect('http://'+location.hostname + ':3000');
 
-            // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
-            var pseudo = prompt('Quel est votre pseudo ?');
-            socket.emit('nouveau_client', pseudo);
-            document.title = pseudo + ' - ' + document.title;
+// On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
+var pseudo = prompt('Quel est votre pseudo ?');
+socket.emit('nouveau_client', pseudo);
+document.title = pseudo + ' - ' + document.title;
 
-            // Quand on reçoit un message, on l'insère dans la page
-            socket.on('message', function(data) {
-                insereMessage(data.pseudo, data.message)
-            })
+// Quand on reçoit un message, on l'insère dans la page
+socket.on('message', function(data) {
+	insereMessage(data.pseudo, data.message)
+})
 
-            // Quand un nouveau client se connecte, on affiche l'information
-            socket.on('nouveau_client', function(pseudo) {
-                $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
-                $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
+// Quand un nouveau client se connecte, on affiche l'information
+socket.on('nouveau_client', function(pseudo) {
+	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
+	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
 
-            })
+})
 
+// Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
+$('#formulaire_chat').submit(function () {
+	var message = $('#message').val();
+	socket.emit('message', message); // Transmet le message aux autres
+	insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
+	$('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
+	return false; // Permet de bloquer l'envoi "classique" du formulaire
+});
 
-            // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
-            $('#formulaire_chat').submit(function () {
-                var message = $('#message').val();
-                socket.emit('message', message); // Transmet le message aux autres
-                insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
-                $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
-                return false; // Permet de bloquer l'envoi "classique" du formulaire
-            });
-            
-            // Ajoute un message venant de l'exterieur
-            function insereMessage(pseudo, message) {
-                $('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
-            }
-            // Ajoute un message interne dans la page
-            function insereMyMessage(pseudo, message) {
-                $('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
-            }
+// Ajoute un message venant de l'exterieur
+function insereMessage(pseudo, message) {
+	$('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+}
+// Ajoute un message interne dans la page
+function insereMyMessage(pseudo, message) {
+	$('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
+}
 
 // render a remote video
 function renderRemote(id, stream) {
@@ -116,27 +114,5 @@ localMedia.once('capture', function(stream) {
   .on('stream:removed', removeRemote)
   .on('channel:opened:chat', function(id, dc) {
     qsa('.chat').forEach(tweak('+open'));
-    dc.onmessage = function(evt) {
-      if (messages) {
-		  messages.appendChild(crel('li', pseudo + ' : ' + evt.data));
-      }
-    };
-
-    // save the channel reference
-    channel = dc;
-    console.log('dc open for peer: ' + id);
   });
 });
-
-// handle chat messages being added
-if (chat) {
-  chat.addEventListener('keydown', function(evt) {
-    if (evt.keyCode === 13) {
-      messages.appendChild(crel('li', { class: 'local-chat' }, 'Moi : '+chat.value));
-      chat.select();
-      if (channel) {
-        channel.send(chat.value);
-      }
-    }
-  });
-}
