@@ -105,15 +105,6 @@ app.get('/room/:roomname', function(req, res, next) {
   fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
 });
 
-// start the server
-server.listen(serverPort, function(err) {
-  if (err) {
-    return console.log('Encountered error starting server: ', err);
-  }
-
-  console.log('running @ http://localhost:' + serverPort + '/');
-});
-
 // Chargement de la page index.html
 //app.get('/', function (req, res) {
   //res.sendfile(__dirname + '/index.html');
@@ -122,6 +113,8 @@ server.listen(serverPort, function(err) {
 io.sockets.on('connection', function (socket, pseudo) {
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('nouveau_client', function(pseudo) {
+
+        alert(__dirname);
         pseudo = ent.encode(pseudo);
         socket.set('pseudo', pseudo);
         socket.broadcast.emit('nouveau_client', pseudo);
@@ -134,6 +127,15 @@ io.sockets.on('connection', function (socket, pseudo) {
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
         });
     }); 
+});
+
+// start the server
+server.listen(serverPort, function(err) {
+  if (err) {
+    return console.log('Encountered error starting server: ', err);
+  }
+
+  console.log('running @ http://localhost:' + serverPort + '/');
 });
 
 //server.listen(3000);
