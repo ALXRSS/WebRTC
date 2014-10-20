@@ -11,6 +11,9 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var ent = require('ent');
 
+// Liste des participants
+var participants = [];
+
 // create the switchboard
 var switchboard = require('rtc-switchboard')(server);
 
@@ -48,11 +51,16 @@ app.get('/room/:roomname', function(req, res, next) {
 
 // on utilise socket.io pour créer deux variables de session à transférer aux clients
 io.sockets.on('connection', function (socket, pseudo) {
+  
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('nouveau_client', function(pseudo) {
         pseudo = ent.encode(pseudo);
         socket.set('pseudo', pseudo);
         socket.broadcast.emit('nouveau_client', pseudo);
+        //Ajout du nouveau participant a la liste
+        participants.push(pseudo);
+            // On donne la liste des participants (événement créé du côté client)
+            socket.emit('recupererParticipants', participants);
     });
 
     // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes

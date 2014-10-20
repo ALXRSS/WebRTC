@@ -41,6 +41,13 @@ var pseudo = prompt('Quel est votre pseudo ?');
 socket.emit('nouveau_client', pseudo);
 document.title = pseudo + ' - ' + document.title;
 
+// On crée l'événement recupererParticipants pour récupérer directement les participants sur le serveur
+socket.on('recupererParticipants', function(participants) {
+  // participants est le tableau contenant tous les participants qui ont été écris sur le serveur
+  for (var i = 0; i < participants.length; i++)
+    $('#list_parts').prepend('<li><em>' + participants[i] + '</em></li>');
+});
+
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
 	insereMessage(data.pseudo, data.message)

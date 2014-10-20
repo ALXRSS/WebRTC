@@ -73,7 +73,7 @@ var ent = require('ent');
 // create the switchboard
 var switchboard = require('rtc-switchboard')(server);
 
-//
+// Liste des participants
 var participants = [];
 
 // convert stylus stylesheets
@@ -125,6 +125,7 @@ io.sockets.on('connection', function (socket, pseudo) {
         pseudo = ent.encode(pseudo);
         socket.set('pseudo', pseudo);
         socket.broadcast.emit('nouveau_client', pseudo);
+        // Ajout du nouveau participant a la liste
         participants.push(pseudo);
             // On donne la liste des participants (événement créé du côté client)
             socket.emit('recupererParticipants', participants);
