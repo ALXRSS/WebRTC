@@ -5,7 +5,7 @@
 
 var path           = require('path')
   , templatesDir   = path.resolve(__dirname, '..', 'templates')
-  , emailTemplates = require('../../')
+  , emailTemplates = require('../../node-email-templates')
   , nodemailer     = require('nodemailer');
 
 emailTemplates(templatesDir, function(err, template) {
@@ -20,17 +20,17 @@ emailTemplates(templatesDir, function(err, template) {
     var transport = nodemailer.createTransport("SMTP", {
       service: "Gmail",
       auth: {
-        user: "some-user@gmail.com",
-        pass: "some-password"
+        user: "webrtcevry@gmail.com",
+        pass: "webrtcevry91"
       }
     });
 
     // An example users object with formatted email function
     var locals = {
-      email: 'mamma.mia@spaghetti.com',
+      email: 'webrtcevry@gmail.com',
       name: {
-        first: 'Mamma',
-        last: 'Mia'
+        first: 'aev',
+        last: 'dpr'
       }
     };
 
@@ -40,9 +40,9 @@ emailTemplates(templatesDir, function(err, template) {
         console.log(err);
       } else {
         transport.sendMail({
-          from: 'Spicy Meatball <spicy.meatball@spaghetti.com>',
+          from: 'WebRtcEvry <webrtcevry@gmail.com>',
           to: locals.email,
-          subject: 'Mangia gli spaghetti con polpette!',
+          subject: 'Invitation à rejoindre la conversation',
           html: html,
           // generateTextFromHTML: true,
           text: text
@@ -63,25 +63,32 @@ emailTemplates(templatesDir, function(err, template) {
     var transportBatch = nodemailer.createTransport("SMTP", {
       service: "Gmail",
       auth: {
-        user: "some-user@gmail.com",
-        pass: "some-password"
+        user: "webrtcevry@gmail.com",
+        pass: "webrtcevry91"
       }
     });
 
     // An example users object
     var users = [
       {
-        email: 'pappa.pizza@spaghetti.com',
+        email: 'webrtcevry@gmail.com',
         name: {
-          first: 'Pappa',
-          last: 'Pizza'
+          first: 'Emmanuel',
+          last: 'Petit'
         }
       },
       {
-        email: 'mister.geppetto@spaghetti.com',
+        email: 'webrtcevry@gmail.com',
         name: {
-          first: 'Mister',
-          last: 'Geppetto'
+          first: 'Alexandre',
+          last: 'Rousseau'
+        }
+      },
+      {
+        email: 'webrtcevry@gmail.com',
+        name: {
+          first: 'Valerian',
+          last: 'Dieu'
         }
       }
     ];
