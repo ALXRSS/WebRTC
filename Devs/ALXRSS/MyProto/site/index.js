@@ -55,7 +55,7 @@ socket.on('message', function(data) {
 
 // Quand un nouveau client se connecte, on affiche l'information
 socket.on('nouveau_client', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
+	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !!!!!!!!!!!!!</em></li>');
 	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
 
 })
@@ -102,6 +102,10 @@ function removeRemote(id) {
     el.parentNode.removeChild(el);
   });
   peerMedia[id] = undefined;
+
+  // supprime de la liste des participants
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitter le Chat !</em></li>');
+  socket.emit('suppression_client', pseudo);
 }
 
 // render our local media to the target element

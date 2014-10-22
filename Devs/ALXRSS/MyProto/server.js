@@ -70,6 +70,14 @@ io.sockets.on('connection', function (socket, pseudo) {
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
         });
     }); 
+
+    // Dès qu'une personne se déconnecte, on le supprime de la liste des participants et on renvoie la liste aux autres
+    socket.on('suppression_client', function (pseudo) {
+        //Suppression participant a la liste
+        participants.supp(pseudo);
+        // On renvoie la liste aux autres
+        socket.broadcast.emit('recupererParticipants', participants);
+    }); 
 });
 
 // start the server
