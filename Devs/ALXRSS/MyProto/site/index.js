@@ -48,6 +48,18 @@ socket.on('recupererParticipants', function(participants) {
     $('#list_parts').prepend('<li><em>' + participants[i] + '</em></li>');
 });
 
+
+// On crée l'événement de suppression /////////////////////////////////////////////////////////
+socket.on('maj_participants', function(participants) {
+  // participants est le tableau contenant tous les participants qui ont été écris sur le serveur
+  //for (var i = 0; i < participants.length; i++)
+  //  $('#list_parts').prepend('<li><em>' + participants[i] + '</em></li>');
+});
+socket.on('msgSuppParts', function(pseudo) {
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitter le Chat !</em></li>');
+});
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
 	insereMessage(data.pseudo, data.message)
@@ -104,8 +116,7 @@ function removeRemote(id) {
   peerMedia[id] = undefined;
 
   // supprime de la liste des participants
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitter le Chat !</em></li>');
-  socket.emit('suppression_client', pseudo);
+  //socket.emit('suppression_client', pseudo);
 }
 
 // render our local media to the target element

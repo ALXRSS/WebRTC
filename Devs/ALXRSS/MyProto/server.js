@@ -73,10 +73,11 @@ io.sockets.on('connection', function (socket, pseudo) {
 
     // Dès qu'une personne se déconnecte, on le supprime de la liste des participants et on renvoie la liste aux autres
     socket.on('suppression_client', function (pseudo) {
-        //Suppression participant a la liste
-        participants.supp(pseudo);
+        //Suppression participant a la liste // Comment faire simplement?
+        //participants.supp(pseudo);
         // On renvoie la liste aux autres
-        socket.broadcast.emit('recupererParticipants', participants);
+        socket.broadcast.emit('majParticipants', participants);
+        socket.broadcast.emit('msgSuppParts', pseudo);
     }); 
 });
 
