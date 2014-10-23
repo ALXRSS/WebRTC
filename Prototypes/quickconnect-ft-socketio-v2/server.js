@@ -69,7 +69,16 @@ io.sockets.on('connection', function (socket, pseudo) {
             message = ent.encode(message);
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
         });
-    }); 
+    });
+	
+	// Vider l'objet à la déconnexion
+	socket.on('disconnect', function () {
+		socket.get('pseudo', function (error, pseudo) {
+			socket.broadcast.emit('disconnect', pseudo);
+		});
+		// mettre à jour la liste des participants
+	});
+	
 });
 
 // start the server

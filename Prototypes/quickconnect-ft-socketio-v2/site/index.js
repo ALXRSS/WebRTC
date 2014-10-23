@@ -57,7 +57,6 @@ socket.on('message', function(data) {
 socket.on('nouveau_client', function(pseudo) {
 	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
 	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
-
 })
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
@@ -77,6 +76,12 @@ function insereMessage(pseudo, message) {
 function insereMyMessage(pseudo, message) {
 	$('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
 }
+
+// Quand un client se déconnecte, on affiche l'information
+socket.on('disconnect', function(pseudo) {
+	$('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
+	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
+})
 
 // render a remote video
 function renderRemote(id, stream) {
