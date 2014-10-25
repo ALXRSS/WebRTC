@@ -75,11 +75,11 @@ io.sockets.on('connection', function (socket, pseudo) {
 	socket.on('disconnect', function () {
 		socket.get('pseudo', function (error, pseudo) {
 			socket.broadcast.emit('disconnect', pseudo);
+			// mettre à jour la liste des participants et la renvoyer aux autres clients
+			var index = participants.indexOf(pseudo);
+			participants.splice(index, 1);
+			socket.broadcast.emit('recupererParticipants', participants);
 		});
-		// mettre à jour la liste des participants et la renvoyer aux autres clients
-		var index = participants.indexOf(pseudo);
-		participants.splice(index, 1);
-		socket.broadcast.emit('recupererParticipants', participants);
 	});
 	
 });
