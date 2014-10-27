@@ -86,6 +86,13 @@ socket.on('disconnect', function(pseudo) {
 	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 
+
+// Gérer les invitations !!!!!!!!!!!!!!!!!!!
+document.getElementById('invitation').onclick = function(){
+	alert('hello');
+}
+
+
 // render a remote video
 function renderRemote(id, stream) {
   var activeStreams;
