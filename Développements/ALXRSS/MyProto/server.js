@@ -10,6 +10,8 @@ var serverPort = parseInt(process.env.PORT, 10) || 3000;
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var ent = require('ent');
+var dl = require('delivery');
+var fs  = require('fs');
 
 // Liste des participants
 var participants = [];
@@ -51,7 +53,28 @@ app.get('/room/:roomname', function(req, res, next) {
 
 // on utilise socket.io pour créer deux variables de session à transférer aux clients
 io.sockets.on('connection', function (socket, pseudo) {
+
+
+
   
+    var delivery = dl.listen(socket);
+  delivery.on('receive.success',function(file){
+
+    alert('Transfer');
+
+    fs.writeFile(file.name,file.buffer, function(err){
+      if(err){
+        console.log('File could not be saved.');
+      }else{
+        console.log('File saved.');
+      };
+    });
+  });
+
+
+
+
+
     // Dès qu'on nous donne un pseudo, on le stocke en variable de session et on informe les autres personnes
     socket.on('nouveau_client', function(pseudo) {
         pseudo = ent.encode(pseudo);

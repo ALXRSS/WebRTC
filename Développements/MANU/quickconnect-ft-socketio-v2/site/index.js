@@ -6,6 +6,8 @@ var qsa = require('fdom/qsa');
 var tweak = require('fdom/classtweak');
 var reRoomName = /^\/room\/(.*?)\/?$/;
 var room = location.pathname.replace(reRoomName, '$1').replace('/', '');
+var delivery = require('delivery');
+
 
 // local & remote video areas
 var local = qsa('.local')[0];
@@ -14,6 +16,8 @@ var remotes = qsa('.remote');
 // data channel & peers
 var channel;
 var peerMedia = {};
+
+
 
 // use google's ice servers
 var iceServers = [
@@ -35,6 +39,30 @@ var localMedia = media({
 
 // Connexion à socket.io
 var socket = io.connect('http://'+location.hostname + ':3000');
+
+socket.on('connect', function(){
+  console.log('1');
+    var delivery = new Delivery(socket);
+     console.log("2");
+    delivery.on('delivery.connect',function(delivery){
+       console.log("3");
+      $("input[type=submit]").click(function(evt){
+         console.log("4");
+        var file = $("input[type=file]")[0].files[0];
+         console.log("5");
+        delivery.send(file);
+         console.log("6");
+        evt.preventDefault();
+         console.log("7");
+      });
+       console.log("8");
+    });
+
+    delivery.on('send.success',function(fileUID){
+      console.log("file was successfully sent.");
+    });
+
+  });
 
 // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
 var pseudo = prompt('Quel est votre pseudo ?');
@@ -89,7 +117,48 @@ socket.on('disconnect', function(pseudo) {
 
 // Gérer les invitations !!!!!!!!!!!!!!!!!!!
 document.getElementById('invitation').onclick = function(){
-	alert('hello');
+
+
+	//var nodemailer = require("nodemailer");
+  //  var audioTracks = stream.getAudioTracks();
+  // for (var i = 0, l = audioTracks.length; i < l; i++) {
+  //   alert('Track');
+  //   audioTracks[i].enabled = !audioTracks[i].enabled;
+  // }
+
+//console.log('Bonjour');
+
+// create reusable transport method (opens pool of SMTP connections)
+// var smtpTransport = nodemailer.createTransport("SMTP",{
+//     service: "Gmail",
+//     auth: {
+//         user: "webrtcevry@gmail.com",
+//         pass: "webrtcevry91"
+//     }
+// });
+
+// setup e-mail data with unicode symbols
+// var mailOptions = {
+//     from: "Fred Foo ✔ <webrtcevry@gmail.com>", // sender address
+//     to: "webrtcevry@gmail.com", // list of receivers
+//     subject: "Hello ✔", // Subject line
+//     text: "Hello world ✔", // plaintext body
+//     html: "<b>Hello world ✔</b>" // html body
+// }
+
+// send mail with defined transport object
+// smtpTransport.sendMail(mailOptions, function(error, response){
+//     if(error){
+//         console.log(error);
+//     }else{
+//         console.log("Message sent: " + response.message);
+//     }
+
+    // if you don't want to use this transport object anymore, uncomment following line
+    //smtpTransport.close(); // shut down the connection pool, no more messages
+//});
+
+//	alert('hello');
 }
 
 
