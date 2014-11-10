@@ -15,7 +15,7 @@
     "rtc-quickconnect": "^3.0.0",
     "rtc-switchboard": "~0.10.1",
 	"socket.io": "~0.9.16",
-  "nodemailer": "0.3.x",
+  "nodemailer": "1.3.0",
 	"ent": "~0.1.0"
   },
   "devDependencies": {},
