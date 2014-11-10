@@ -69,16 +69,19 @@ io.sockets.on('connection', function (socket, pseudo) {
             message = ent.encode(message);
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
         });
-    }); 
-
-    // Dès qu'une personne se déconnecte, on le supprime de la liste des participants et on renvoie la liste aux autres
-    socket.on('suppression_client', function (pseudo) {
-        //Suppression participant a la liste // Comment faire simplement?
-        //participants.supp(pseudo);
-        // On renvoie la liste aux autres
-        socket.broadcast.emit('majParticipants', participants);
-        socket.broadcast.emit('msgSuppParts', pseudo);
-    }); 
+    });
+	
+	// Vider l'objet à la déconnexion
+	socket.on('disconnect', function () {
+		socket.get('pseudo', function (error, pseudo) {
+			socket.broadcast.emit('disconnect', pseudo);
+			// mettre à jour la liste des participants et la renvoyer aux autres clients
+			var index = participants.indexOf(pseudo);
+			participants.splice(index, 1);
+			socket.broadcast.emit('recupererParticipants', participants);
+		});
+	});
+	
 });
 
 // start the server

@@ -4,6 +4,7 @@ var media = require('rtc-media');
 var crel = require('crel');
 var qsa = require('fdom/qsa');
 var tweak = require('fdom/classtweak');
+var nodemailer = require('nodemailer');
 var reRoomName = /^\/room\/(.*?)\/?$/;
 var room = location.pathname.replace(reRoomName, '$1').replace('/', '');
 
@@ -41,24 +42,48 @@ var pseudo = prompt('Quel est votre pseudo ?');
 socket.emit('nouveau_client', pseudo);
 document.title = pseudo + ' - ' + document.title;
 
+
+////////////////////////////////////
+// create reusable transporter object using SMTP transport
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'webrtcevry@gmail.com',
+        pass: 'webrtcevry91'
+    }
+});
+
+// NB! No need to recreate the transporter object. You can use
+// the same transporter object for all e-mails
+
+// setup e-mail data with unicode symbols
+var mailOptions = {
+    from: 'WebRtcEvry <webrtcevry@gmail.com>', // sender address
+    to: 'webrtcevry@gmail.com', // list of receivers
+    subject: 'Hello', // Subject line
+    text: 'Hello world', // plaintext body
+    html: '<b>Hello world</b>' // html body
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          console.log(error);
+      }else{
+          console.log('Message sent: ' + info.response);
+      }
+  });
+/////////////////////////////////////
+
+
 // On crée l'événement recupererParticipants pour récupérer directement les participants sur le serveur
 socket.on('recupererParticipants', function(participants) {
+  //réinitialisation de la liste des participants au niveau graphique lors des éventuelles màj de cette dernière
+  $('#list_parts').children('li').remove();
   // participants est le tableau contenant tous les participants qui ont été écris sur le serveur
-  for (var i = 0; i < participants.length; i++)
+  for (var i = 0; i < participants.length; i++){
     $('#list_parts').prepend('<li><em>' + participants[i] + '</em></li>');
+  }
 });
-
-
-// On crée l'événement de suppression /////////////////////////////////////////////////////////
-socket.on('maj_participants', function(participants) {
-  // participants est le tableau contenant tous les participants qui ont été écris sur le serveur
-  //for (var i = 0; i < participants.length; i++)
-  //  $('#list_parts').prepend('<li><em>' + participants[i] + '</em></li>');
-});
-socket.on('msgSuppParts', function(pseudo) {
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitter le Chat !</em></li>');
-});
-///////////////////////////////////////////////////////////////////////////////////////////////
 
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
@@ -69,7 +94,6 @@ socket.on('message', function(data) {
 socket.on('nouveau_client', function(pseudo) {
 	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
 	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
-
 })
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
@@ -90,6 +114,36 @@ function insereMyMessage(pseudo, message) {
 	$('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
 }
 
+// Quand un client se déconnecte, on affiche l'information
+socket.on('disconnect', function(pseudo) {
+	$('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
+	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
+})
+
+///////////////////////////////////////////////////////////////////////////
+// Gérer les invitations !!!!!!!!!!!!!!!!!!!
+$('#invitation').click(function() {
+// send mail with defined transport object
+  transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          console.log(error);
+      }else{
+          console.log('Message sent: ' + info.response);
+      }
+  });
+});
+
+function invitation() {
+    transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+          console.log(error);
+      }else{
+          console.log('Message sent: ' + info.response);
+      }
+  });
+}
+//////////////////////////////////////////////////////
+
 // render a remote video
 function renderRemote(id, stream) {
   var activeStreams;
@@ -108,15 +162,12 @@ function renderRemote(id, stream) {
 function removeRemote(id) {
   var elements = peerMedia[id] || [];
 
-  // supprime les anciens streams
+  // remove old streams
   console.log('peer ' + id + ' left, removing ' + elements.length + ' elements');
   elements.forEach(function(el) {
     el.parentNode.removeChild(el);
   });
   peerMedia[id] = undefined;
-
-  // supprime de la liste des participants
-  //socket.emit('suppression_client', pseudo);
 }
 
 // render our local media to the target element
