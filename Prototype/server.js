@@ -1,8 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
-var stylus = require('stylus');
-var nib = require('nib');
 var app = express();
 var server = require('http').Server(app);
 var browserify = require('browserify-middleware');
@@ -16,18 +14,6 @@ var participants = [];
 
 // create the switchboard
 var switchboard = require('rtc-switchboard')(server);
-
-// convert stylus stylesheets
-app.use(stylus.middleware({
-  src: __dirname + '/site',
-  compile: function(str, sourcePath) {
-    return stylus(str)
-      .set('filename', sourcePath)
-      .set('compress', false)
-      .use(nib());
-  }
-}));
-
 
 app.get('/', function(req, res) {
   res.redirect(req.uri.pathname + 'room/main/');
