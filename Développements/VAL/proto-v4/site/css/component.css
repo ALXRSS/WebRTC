@@ -103,7 +103,7 @@ button.contener {
   background: none;
   
   position: absolute;
-  right: 150px;
+  left: 300px;
 }
 
 .contener {
@@ -178,4 +178,35 @@ button.contener {
   width: 30px;
   margin-right:20px;
   margin-top: 5px;
+}
+
+/* Invitation */
+
+button.invitation {
+  outline: none;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 35px;
+  border: solid 3px white;
+  cursor: pointer;
+  position: absolute;
+  right: 100px;
+  
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+
+button.invitation:hover {
+  -webkit-transform: scale(2);
+  -moz-transform: scale(2);
+  -ms-transform: scale(2);
+  transform: scale(2); 
 }
