@@ -4,7 +4,6 @@ var media = require('rtc-media');
 var crel = require('crel');
 var qsa = require('fdom/qsa');
 var tweak = require('fdom/classtweak');
-var nodemailer = require('nodemailer');
 var reRoomName = /^\/room\/(.*?)\/?$/;
 var room = location.pathname.replace(reRoomName, '$1').replace('/', '');
 
@@ -41,29 +40,6 @@ var socket = io.connect('http://'+location.hostname + ':3000');
 var pseudo = prompt('Quel est votre pseudo ?');
 socket.emit('nouveau_client', pseudo);
 document.title = pseudo + ' - ' + document.title;
-
-
-////////////////////////////////////
-// create reusable transporter object using SMTP transport
-var transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: 'webrtcevry@gmail.com',
-        pass: 'webrtcevry91'
-    }
-});
-
-// setup e-mail data with unicode symbols
-var mailOptions = {
-    from: 'WebRtcEvry <webrtcevry@gmail.com>', // sender address
-    to: 'webrtcevry@gmail.com', // list of receivers
-    subject: 'Hello', // Subject line
-    text: 'Hello world', // plaintext body
-    html: '<b>Hello world</b>' // html body
-};
-
-/////////////////////////////////////
-
 
 // On crée l'événement recupererParticipants pour récupérer directement les participants sur le serveur
 socket.on('recupererParticipants', function(participants) {
@@ -110,19 +86,11 @@ socket.on('disconnect', function(pseudo) {
 	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 
-///////////////////////////////////////////////////////////////////////////
-// Gérer les invitations !!!!!!!!!!!!!!!!!!!
 $('#invitation').click(function() {
-// send mail with defined transport object
-  transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-          console.log(error);
-      }else{
-          console.log('Message sent: ' + info.response);
-      }
-  });
+  var dest = prompt('Entrez le mail du destinataire');
+  var url = 'http://'+location.hostname + ':3000';
+  socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
 });
-//////////////////////////////////////////////////////
 
 // render a remote video
 function renderRemote(id, stream) {
