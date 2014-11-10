@@ -53,44 +53,45 @@ socket.on('recupererParticipants', function(participants) {
 
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
-	insereMessage(data.pseudo, data.message)
+  insereMessage(data.pseudo, data.message)
 })
 
 // Quand un nouveau client se connecte, on affiche l'information
 socket.on('nouveau_client', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
-	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
+  $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
 })
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
 $('#formulaire_chat').submit(function () {
-	var message = $('#message').val();
-	socket.emit('message', message); // Transmet le message aux autres
-	insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
-	$('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
-	return false; // Permet de bloquer l'envoi "classique" du formulaire
+  var message = $('#message').val();
+  socket.emit('message', message); // Transmet le message aux autres
+  insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
+  $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
+  return false; // Permet de bloquer l'envoi "classique" du formulaire
 });
 
 // Ajoute un message venant de l'exterieur
 function insereMessage(pseudo, message) {
-	$('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
 }
 // Ajoute un message interne dans la page
 function insereMyMessage(pseudo, message) {
-	$('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
 }
 
 // Quand un client se déconnecte, on affiche l'information
 socket.on('disconnect', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
-	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
+  //$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
-
+//////////////////////
 $('#invitation').click(function() {
   var dest = prompt('Entrez le mail du destinataire');
   var url = 'http://'+location.hostname + ':3000';
   socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
 });
+////////////////////////////////////////////////////////////////
 
 // render a remote video
 function renderRemote(id, stream) {
