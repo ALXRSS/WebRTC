@@ -86,6 +86,12 @@ socket.on('disconnect', function(pseudo) {
 	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 
+$('#invitation').click(function() {
+  var dest = prompt('Entrez le mail du destinataire');
+  var url = 'http://'+location.hostname + ':3000';
+  socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
+});
+
 // render a remote video
 function renderRemote(id, stream) {
   var activeStreams;

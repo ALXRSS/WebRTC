@@ -8,6 +8,7 @@ var serverPort = parseInt(process.env.PORT, 10) || 3000;
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var ent = require('ent');
+var nodemailer = require('nodemailer');
 
 // Liste des participants
 var participants = [];
@@ -33,6 +34,15 @@ app.get('/rtc.io/primus.js', switchboard.library());
 app.get('/room/:roomname', function(req, res, next) {
   res.writeHead(200);
   fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
+});
+
+// creation d'un transporteur reutilisable utilisant SMTP transport
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'webrtcevry@gmail.com',
+        pass: 'webrtcevry91'
+    }
 });
 
 // on utilise socket.io pour créer deux variables de session à transférer aux clients
@@ -68,6 +78,27 @@ io.sockets.on('connection', function (socket, pseudo) {
 		});
 	});
 	
+  // Invitation d'un participant par envoi de mail
+  socket.on('invitation', function (data) {
+
+      // setup e-mail data with unicode symbols
+      var mailOptions = {
+        from: 'Web RTC <webrtcevry@gmail.com>', // sender address
+        to: data.destinataire, // list of receivers
+        subject: 'Invitation WebRTC', // Subject line
+        text: 'Bonjour, '+ data.pseudo +' vous invite à rejoindre une room web RTC à cette adresse : '+ data.url, // plaintext body
+        html: '<b>Bonjour, '+ data.pseudo +' vous invite à rejoindre une room web RTC à cette adresse : '+ data.url +'</b>' // html body
+      };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+           console.log(error);
+         }else{
+           console.log('Message sent: ' + info.response);
+          }
+        });
+    });
 });
 
 // start the server

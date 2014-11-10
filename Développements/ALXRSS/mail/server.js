@@ -109,7 +109,6 @@ io.sockets.on('connection', function (socket, pseudo) {
 
         // send mail with defined transport object
         transporter.sendMail(mailOptions, function(error, info){
-          console.log('Methode envoie mail');
           if(error){
            console.log(error);
          }else{
