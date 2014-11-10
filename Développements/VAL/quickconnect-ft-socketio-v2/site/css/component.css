@@ -1,0 +1,212 @@
+*,
+*:after,
+*::before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.st-pusher {
+  z-index: 99;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+
+.st-pusher::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  background: rgba(0,0,0,0.2);
+  content: '';
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+  transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+.st-menu-open .st-pusher::after {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.st-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  visibility: hidden;
+  width: 300px;
+  height: 100%;
+  background: #48a770;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.st-menu::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  content: '';
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.st-menu-open .st-menu::after {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+  transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+/* content style */
+
+.st-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.st-menu h2 {
+  margin: 0;
+  padding: 1em;
+  color: rgba(0,0,0,0.4);
+  text-shadow: 0 0 1px rgba(0,0,0,0.1);
+  font-weight: 300;
+  font-size: 2em;
+}
+
+.st-menu ul li a {
+  display: block;
+  padding: 1em 1em 1em 1.2em;
+  outline: none;
+  box-shadow: inset 0 -1px rgba(0,0,0,0.2);
+  color: #f3efe0;
+  text-transform: uppercase;
+  text-shadow: 0 0 1px rgba(255,255,255,0.1);
+  letter-spacing: 1px;
+  font-weight: 400;
+  -webkit-transition: background 0.3s, box-shadow 0.3s;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.st-menu ul li:first-child a {
+  box-shadow: inset 0 -1px rgba(0,0,0,0.2), inset 0 1px rgba(0,0,0,0.2);
+}
+
+.st-menu ul li a:hover {
+  background: rgba(0,0,0,0.2);
+  box-shadow: inset 0 -1px rgba(0,0,0,0);
+  color: #fff;
+}
+
+/* Individual effects */
+
+/* Effect 1: Slide in on top */
+.st-effect-1.st-menu {
+  visibility: visible;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-1.st-menu-open .st-effect-1.st-menu {
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.st-effect-1.st-menu::after {
+  display: none;
+}
+
+/* Material design button */
+
+button.contener {
+  outline: none;
+  border: none;
+  background: none;
+  
+  position: absolute;
+  right: 150px;
+}
+
+.contener {
+  width: 50px;
+  height: 41px;
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+  cursor: pointer;
+}
+.contener:focus {
+  -webkit-transition:all 0.4s linear;
+  -webkit-transform: rotate(360deg);
+  -moz-transition:all 0.4s linear;
+  -moz-transform: rotate(360deg);
+  -ms-transition:all 0.4s linear;
+  -ms-transform: rotate(360deg);
+  transition:all 0.4s linear;
+  transform: rotate(360deg);
+}
+.contener .menu1 {
+  width: 50px;
+  height: 7px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+.contener:focus .menu1 {
+  -webkit-transition:all 0.4s linear;
+  -webkit-transform: rotate(-45deg);
+  -moz-transition:all 0.4s linear;
+  -moz-transform: rotate(-45deg);
+  -ms-transition:all 0.4s linear;
+  -ms-transform: rotate(-45deg);
+  transition:all 0.4s linear;
+  transform: rotate(-45deg);
+  width: 30px;
+  margin-right:20px;
+  margin-bottom: 5px;
+}
+.contener .menu2 {
+  width: 50px;
+  height: 7px;
+  background-color: #ffffff;
+}
+.contener:focus .menu2 {
+  border-radius: 5px;
+}
+.contener .menu3 {
+  width: 50px;
+  height: 7px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+.contener:focus .menu3 {
+  -webkit-transition:all 0.4s linear;
+  -webkit-transform: rotate(45deg);
+  -moz-transition:all 0.4s linear;
+  -moz-transform: rotate(45deg);
+  -ms-transition:all 0.4s linear;
+  -ms-transform: rotate(45deg);
+  transition:all 0.4s linear;
+  transform: rotate(45deg);
+  width: 30px;
+  margin-right:20px;
+  margin-top: 5px;
+}
