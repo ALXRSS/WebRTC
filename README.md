@@ -19,15 +19,16 @@
 * liste des participants, mise à jour lors d'une connexion ou déconnexion
 * _module utile : socket.io_
 
-### Invitation --> A faire
-* inviter des personnes à rejoindre la vidéo conférence --> a faire
-* envoi d'un mail avec email du destinataire et pseudo de l'émetteur --> a faire
-* QR Code pour rejoidre la conversation via smartphone --> a faire
+### Invitation
+* inviter des personnes à rejoindre la vidéo conférence
+* envoi d'un mail avec email du destinataire et pseudo de l'émetteur
+* le destinataire reçoit l'URL de la room à rejoindre
+* QR Code pour rejoidre la conversation via smartphone --> a faire ?
   
-### Transfert de fichier --> A faire
+### Transfert de fichier
 * échange de fichiers entre utilisateurs (fichiers, vidéos, images) --> a faire
   
-### Design --> A faire
+### Design
 * Améliorer le design de base --> a faire
 * responsive --> a faire
   
@@ -35,6 +36,6 @@
 * via le navigateur de chacun (Chrome, Firefox en priorité)
 * fonctionnel en ouvrant plusieurs onglets sur la même machine
 * fonctionnel sur des machines différentes sur le même réseau
-* fonctionnel sur des machines différentes sur un réseau réseau différent --> a faire
+* fonctionnel sur des machines différentes sur un réseau différent (paramétrage nécessaire)
 
 Vous trouverez plus d'informations sur notre [wiki](https://github.com/ALXRSS/WebRTC/wiki)
