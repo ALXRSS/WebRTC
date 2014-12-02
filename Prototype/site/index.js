@@ -73,11 +73,11 @@ $('#formulaire_chat').submit(function () {
 
 // Ajoute un message venant de l'exterieur
 function insereMessage(pseudo, message) {
-  $('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li class="block-recu"> <div class="pseudo-recu">' + pseudo + '</div> <div class="message-recu">' + message + '</div></li>');
 }
 // Ajoute un message interne dans la page
 function insereMyMessage(pseudo, message) {
-  $('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li class="block-envoye"> <div class="pseudo-envoye">' + pseudo + '</div> <div class="message-envoye">' + message + '</div></li>');
 }
 
 // Quand un client se déconnecte, on affiche l'information

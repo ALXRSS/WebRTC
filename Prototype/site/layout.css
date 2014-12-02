@@ -3,6 +3,8 @@ body {
   width: 100%;
   height: 100%;
   margin: 0;
+  
+  background-color: rgb(246, 246, 246);
 }
 header {
   /*position: absolute;*/
@@ -10,14 +12,8 @@ header {
   width: 100%;
   height: 50px;
   text-align: center;
-
-  background: -moz-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%, rgba(54,112,173,1) 25%, rgba(95,154,207,0.7) 100%, rgba(125,185,232,0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(30,87,153,1)), color-stop(25%,rgba(54,112,173,1)), color-stop(100%,rgba(95,154,207,0.7)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* IE10+ */
-  background: radial-gradient(ellipse at center,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  
+  background-color: rgba(125, 185, 232, 0.5);
 }
 header h1 {
   display: inline-block;
@@ -196,13 +192,7 @@ header h1 {
   right: 10px;
   color: white;
   
-  background: -moz-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%, rgba(54,112,173,1) 25%, rgba(95,154,207,0.7) 100%, rgba(125,185,232,0) 100%); /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(30,87,153,1)), color-stop(25%,rgba(54,112,173,1)), color-stop(100%,rgba(95,154,207,0.7)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* IE10+ */
-  background: radial-gradient(ellipse at center,  rgba(30,87,153,1) 0%,rgba(54,112,173,1) 25%,rgba(95,154,207,0.7) 100%,rgba(125,185,232,0) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  background-color: rgba(125, 185, 232, 0.5);
 }
 #zone_parts > ul {
   list-style: none;
@@ -212,4 +202,50 @@ header h1 {
 #zone_parts > li {
   color: #00f;
   padding: 1px 2px;
+}
+
+.block-recu {
+  width: 100%;
+  float: right;
+}
+
+.block-envoye {
+  width: 100%;
+}
+
+.pseudo-recu {
+  text-align: right;
+}
+
+.pseudo-envoye {
+
+}
+
+.message-recu {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  
+  background-color: rgba(125, 185, 232, 0.9);
+  margin: 3px;
+  padding: 5px;
+  word-wrap: break-word;
+  width: 80%;
+  max-height: 100%;
+  float: right;
+}
+
+.message-envoye {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  
+  background-color: rgba(125, 185, 232, 0.4);
+  margin: 3px;
+  padding: 5px;
+  word-wrap: break-word;
+  width: 80%;
+  max-height: 100%;
 }

@@ -58,8 +58,8 @@ socket.on('message', function(data) {
 
 // Quand un nouveau client se connecte, on affiche l'information
 socket.on('nouveau_client', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
-	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
+	$('#list_chat').prepend('<h4>' + pseudo + ' a rejoint le Chat !</h4>');
+	$('#list_parts').prepend('<h4>' + pseudo + '</h4>');
 })
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
@@ -73,16 +73,16 @@ $('#formulaire_chat').submit(function () {
 
 // Ajoute un message venant de l'exterieur
 function insereMessage(pseudo, message) {
-	$('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+	$('#list_chat').prepend('<li class="block-recu"> <div class="pseudo-recu">' + pseudo + '</div> <div class="message-recu">' + message + '</div></li>');
 }
 // Ajoute un message interne dans la page
 function insereMyMessage(pseudo, message) {
-	$('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
+	$('#list_chat').prepend('<li class="block-envoye"> <div class="pseudo-envoye">' + pseudo + '</div> <div class="message-envoye">' + message + '</div></li>');
 }
 
 // Quand un client se déconnecte, on affiche l'information
 socket.on('disconnect', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
+	$('#list_chat').prepend('<h4>' + pseudo + ' a quitte le Chat !</h4>');
 	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 
