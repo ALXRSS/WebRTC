@@ -58,7 +58,7 @@ socket.on('message', function(data) {
 
 // Quand un nouveau client se connecte, on affiche l'information
 socket.on('nouveau_client', function(pseudo) {
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint la conversation !</em></li>');
   $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
 })
 
@@ -82,7 +82,7 @@ function insereMyMessage(pseudo, message) {
 
 // Quand un client se déconnecte, on affiche l'information
 socket.on('disconnect', function(pseudo) {
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitte la conversation !</em></li>');
   //$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 //////////////////////

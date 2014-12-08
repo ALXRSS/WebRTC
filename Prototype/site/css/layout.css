@@ -7,22 +7,27 @@ body {
   background-color: rgb(246, 246, 246);
 }
 header {
-  /*position: absolute;*/
+
   top: 0;
   width: 100%;
   height: 50px;
   text-align: center;
   
-  background-color: rgba(125, 185, 232, 0.5);
+  background-color: rgba(37, 127, 83, 0.8);
 }
-header h1 {
+#titre {
+
   display: inline-block;
   color: white;
-  font-size: 100%;
+  font-size: 230%;
+  margin: auto;
 }
 .img_participants {
-  position: absolute;
-  right: 20px;
+  width: 50px;
+  height: 50px;
+  float: right;
+
+
   cursor: pointer;
 }
 .container {
@@ -141,7 +146,8 @@ header h1 {
   -ms-flex: 1 1 30%;
   flex: 1 1 30%;
   padding: 0px 10px;
-  background: #f4f4f4;
+  background-color: rgb(246, 246, 246);
+
 }
 .open {
   display: -webkit-box;
@@ -192,7 +198,7 @@ header h1 {
   right: 10px;
   color: white;
   
-  background-color: rgba(125, 185, 232, 0.5);
+  background-color: rgba(37, 127, 83, 0.8);
 }
 #zone_parts > ul {
   list-style: none;
@@ -206,18 +212,21 @@ header h1 {
 
 .block-recu {
   width: 100%;
-  float: right;
+
 }
 
 .block-envoye {
   width: 100%;
+  float: right;
 }
 
 .pseudo-recu {
-  text-align: right;
+  
+
 }
 
 .pseudo-envoye {
+  text-align: right;
 
 }
 
@@ -227,13 +236,13 @@ header h1 {
   -ms-border-radius: 2px;
   border-radius: 2px;
   
-  background-color: rgba(125, 185, 232, 0.9);
+  background-color: rgba(37, 127, 83, 0.4);
   margin: 3px;
   padding: 5px;
   word-wrap: break-word;
   width: 80%;
   max-height: 100%;
-  float: right;
+
 }
 
 .message-envoye {
@@ -242,10 +251,144 @@ header h1 {
   -ms-border-radius: 2px;
   border-radius: 2px;
   
-  background-color: rgba(125, 185, 232, 0.4);
+  background-color: rgba(37, 127, 83, 0.9);
   margin: 3px;
   padding: 5px;
   word-wrap: break-word;
   width: 80%;
   max-height: 100%;
+  float: right;
+}
+
+/* Toggle chat */
+
+*,
+*:after,
+*::before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.st-container,
+.st-content {
+	height: 100%;
+}
+
+.st-content {
+  display: inline;
+}
+
+.st-container {
+	position: relative;
+	overflow: hidden;
+}
+
+.st-pusher {
+  display: inline;
+  z-index: 99;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+
+.st-pusher::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  background: rgba(0,0,0,0.2);
+  content: '';
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+  transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+#st-trigger-effects {
+  display: inline;
+}
+
+.st-menu-open .st-pusher::after {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.st-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  visibility: hidden;
+  overflow: auto;
+  width: 300px;
+  height: 100%;
+  background-color: rgb(246, 246, 246);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.st-menu::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  content: '';
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.st-menu-open .st-menu::after {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+  transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+/* Individual effects */
+
+/* Effect 1: Slide in on top */
+.st-effect-1.st-menu {
+  visibility: visible;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-1.st-menu-open .st-effect-1.st-menu {
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.st-effect-1.st-menu::after {
+  display: none;
+}
+
+/* ChatBtn */
+
+.contener {
+  outline: none;
+  border: none;
+  background: none;
+  float: left;
+}
+
+#bubble {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+/* InvitationBtn */
+
+#invitation {
+  width: 50px;
+  height: 50px;
+  float: right;
+  cursor: pointer;
 }
