@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/site'));
 // we need to expose the primus library
 app.get('/', function(req, res) {
   res.writeHead(200);
-  fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
+  res.render(__dirname, 'site', 'index.html');
 });
 app.get('/rtc.io/primus.js', switchboard.library());
 app.get('/room/:roomname', function(req, res, next) {
