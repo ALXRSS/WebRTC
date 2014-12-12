@@ -88,18 +88,9 @@ socket.on('disconnect', function(pseudo) {
 //////////////////////
 $('#invitation').click(function() {
   var dest = prompt('Entrez le mail du destinataire');
-  var url = 'http://'+location.hostname + ':3000/room/main';
+  var url = 'http://'+location.hostname + ':3000';
   socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
 });
-
-/////////////////////////////Micro Control
-//$('#micro').click(function(stream) { // stream is your local WebRTC stream
-//  var audioTracks = stream.getAudioTracks();
-//  for (var i = 0, l = audioTracks.length; i < l; i++) {
-//    audioTracks[i].enabled = !audioTracks[i].enabled;
-//  }
-//});
-
 ////////////////////////////////////////////////////////////////
 
 // render a remote video
