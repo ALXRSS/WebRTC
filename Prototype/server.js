@@ -16,9 +16,7 @@ var participants = [];
 // create the switchboard
 var switchboard = require('rtc-switchboard')(server);
 
-app.get('/', function(req, res) {
-  res.redirect(req.uri.pathname + 'room/main/');
-});
+
 
 browserify.settings.development('debug', true);
 
@@ -30,10 +28,14 @@ app.use(browserify('./site'));
 app.use(express.static(__dirname + '/site'));
 
 // we need to expose the primus library
+app.get('/', function(req, res) {
+  res.writeHead(200);
+  fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
+});
 app.get('/rtc.io/primus.js', switchboard.library());
 app.get('/room/:roomname', function(req, res, next) {
   res.writeHead(200);
-  fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
+  fs.createReadStream(path.resolve(__dirname, 'site', 'room.html')).pipe(res);
 });
 
 ////////////////////////////

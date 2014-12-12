@@ -7,16 +7,14 @@ body {
   background-color: rgb(246, 246, 246);
 }
 header {
-
   top: 0;
   width: 100%;
   height: 50px;
   text-align: center;
   
-  background-color: rgba(69, 132, 240, 0.9);
+  background-color: rgba(37, 127, 83, 0.8);
 }
 #titre {
-
   display: inline-block;
   color: white;
   font-size: 230%;
@@ -26,8 +24,6 @@ header {
   width: 50px;
   height: 50px;
   float: right;
-
-
   cursor: pointer;
 }
 .container {
@@ -147,7 +143,6 @@ header {
   flex: 1 1 30%;
   padding: 0px 10px;
   background-color: rgb(246, 246, 246);
-
 }
 .open {
   display: -webkit-box;
@@ -212,7 +207,6 @@ header {
 
 .block-recu {
   width: 100%;
-
 }
 
 .block-envoye {
@@ -222,12 +216,10 @@ header {
 
 .pseudo-recu {
   
-
 }
 
 .pseudo-envoye {
   text-align: right;
-
 }
 
 .message-recu {
@@ -242,7 +234,6 @@ header {
   word-wrap: break-word;
   width: 80%;
   max-height: 100%;
-
 }
 
 .message-envoye {
