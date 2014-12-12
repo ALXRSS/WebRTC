@@ -88,7 +88,7 @@ socket.on('disconnect', function(pseudo) {
 //////////////////////
 $('#invitation').click(function() {
   var dest = prompt('Entrez le mail du destinataire');
-  var url = 'http://'+location.hostname + ':3000';
+  var url = 'http://'+location.hostname + ':3000/room/main';
   socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
 });
 ////////////////////////////////////////////////////////////////
