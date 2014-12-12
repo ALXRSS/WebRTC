@@ -91,6 +91,15 @@ $('#invitation').click(function() {
   var url = 'http://'+location.hostname + ':3000/room/main';
   socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
 });
+
+/////////////////////////////Micro Control
+$('#micro').click(function(stream) { // stream is your local WebRTC stream
+  var audioTracks = stream.getAudioTracks();
+  for (var i = 0, l = audioTracks.length; i < l; i++) {
+    audioTracks[i].enabled = !audioTracks[i].enabled;
+  }
+});
+
 ////////////////////////////////////////////////////////////////
 
 // render a remote video
