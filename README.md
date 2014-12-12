@@ -24,12 +24,14 @@
 * envoi d'un mail avec email du destinataire et pseudo de l'émetteur
 * le destinataire reçoit l'URL de la room à rejoindre
 * QR Code pour rejoidre la conversation via smartphone --> a faire ?
+* _module utile : nodemailer_
   
 ### Transfert de fichier
 * échange de fichiers entre utilisateurs (fichiers, vidéos, images) --> a faire
   
 ### Design
-* Améliorer le design de base --> a faire
+* Améliorer le design de base
+* Intégrer une page d'accueil
 * responsive --> a faire
   
 ### Accessibilité
