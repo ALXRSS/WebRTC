@@ -1,0 +1,213 @@
+*,
+*:after,
+*::before {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.st-container,
+.st-content {
+	height: 100%;
+}
+
+.st-container {
+	position: relative;
+	overflow: hidden;
+}
+
+.st-pusher {
+  z-index: 99;
+  -webkit-transition: -webkit-transform 0.5s;
+  transition: transform 0.5s;
+}
+
+.st-pusher::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  background: rgba(0,0,0,0.2);
+  content: '';
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+  transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+.st-menu-open .st-pusher::after {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.st-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  visibility: hidden;
+  overflow: auto;
+  width: 300px;
+  height: 100%;
+  background-color: rgb(246, 246, 246);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.st-menu::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.2);
+  content: '';
+  opacity: 1;
+  -webkit-transition: opacity 0.5s;
+  transition: opacity 0.5s;
+}
+
+.st-menu-open .st-menu::after {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+  transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+/* Individual effects */
+
+/* Effect 1: Slide in on top */
+.st-effect-1.st-menu {
+  visibility: visible;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.st-effect-1.st-menu-open .st-effect-1.st-menu {
+  visibility: visible;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.st-effect-1.st-menu::after {
+  display: none;
+}
+
+/* Material design button */
+
+button.contener {
+  outline: none;
+  border: none;
+  background: none;
+  
+  position: absolute;
+  left: 300px;
+}
+
+.contener {
+  width: 50px;
+  height: 41px;
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+  cursor: pointer;
+}
+.contener:focus {
+  -webkit-transition:all 0.4s linear;
+  -webkit-transform: rotate(360deg);
+  -moz-transition:all 0.4s linear;
+  -moz-transform: rotate(360deg);
+  -ms-transition:all 0.4s linear;
+  -ms-transform: rotate(360deg);
+  transition:all 0.4s linear;
+  transform: rotate(360deg);
+}
+.contener .menu1 {
+  width: 50px;
+  height: 7px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+.contener:focus .menu1 {
+  -webkit-transition:all 0.4s linear;
+  -webkit-transform: rotate(-45deg);
+  -moz-transition:all 0.4s linear;
+  -moz-transform: rotate(-45deg);
+  -ms-transition:all 0.4s linear;
+  -ms-transform: rotate(-45deg);
+  transition:all 0.4s linear;
+  transform: rotate(-45deg);
+  width: 30px;
+  margin-right:20px;
+  margin-bottom: 5px;
+}
+.contener .menu2 {
+  width: 50px;
+  height: 7px;
+  background-color: #ffffff;
+}
+.contener:focus .menu2 {
+  border-radius: 5px;
+}
+.contener .menu3 {
+  width: 50px;
+  height: 7px;
+  background-color: #ffffff;
+  margin-top: 10px;
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+.contener:focus .menu3 {
+  -webkit-transition:all 0.4s linear;
+  -webkit-transform: rotate(45deg);
+  -moz-transition:all 0.4s linear;
+  -moz-transform: rotate(45deg);
+  -ms-transition:all 0.4s linear;
+  -ms-transform: rotate(45deg);
+  transition:all 0.4s linear;
+  transform: rotate(45deg);
+  width: 30px;
+  margin-right:20px;
+  margin-top: 5px;
+}
+
+/* Invitation */
+
+button.invitation {
+  outline: none;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 35px;
+  border: solid 3px white;
+  cursor: pointer;
+  position: absolute;
+  right: 100px;
+  
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  
+  -webkit-transition:all 0.4s linear;
+  -moz-transition:all 0.4s linear;
+  -ms-transition:all 0.4s linear;
+  transition:all 0.4s linear;
+}
+
+button.invitation:hover {
+  -webkit-transform: scale(2);
+  -moz-transform: scale(2);
+  -ms-transform: scale(2);
+  transform: scale(2); 
+}

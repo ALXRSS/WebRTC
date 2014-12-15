@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebRTC : Client leger</title>
+	<link rel="stylesheet" href="../../css/room.css" />
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+	<div id="st-container" class="st-container">
+		<header>
+			<div class="st-pusher">
+				<div class="st-content">
+					<div id="st-trigger-effects">
+						<button data-effect="st-effect-1" class="contener">
+							<img id="bubble" class="bubble" alt="bubble" src="../../img/bubbleBtn.png" />
+						</button>
+					</div>
+				</div>
+			</div>
+			<h1 id="titre">WebRTC : Client leger</h1>
+			<img id="invitation" class="invitation" alt="invite" src="../../img/addBtn.png" />
+			<div id="participants">
+				<img class="img_participants" src="../../img/peopleBtn.png" alt="participants" />
+				<fieldset id="zone_parts">
+					<legend>Liste des participants</legend>
+					<ul id="list_parts"></ul>   
+				</fieldset>
+			</div>
+		</header>
+		
+		<div class="layout layout-hz">
+			<div class="st-menu st-effect-1" >
+				<div class="chat">
+					<h4>Messagerie instantan&eacute;e</h4>
+					<form action="/" method="post" id="formulaire_chat">
+						<input type="text" name="message" id="message" placeholder="Votre message..." size="30" autofocus />
+					</form>
+
+					<div id="zone_chat">
+						<ul id="list_chat"></ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="layout">	
+				<div class="container">
+					<div class="remote"></div>
+					<div class="remote"></div>
+				</div>
+				<div class="local"></div>		
+			</div>
+			
+		</div>
+	</div>
+	<script src="../../rtc.io/primus.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="../../js/room.js"></script>
+	<script src="../../js/classie.js"></script>
+	<script src="../../js/sidebarEffects.js"></script>
+	
+	<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
