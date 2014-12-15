@@ -58,7 +58,7 @@ socket.on('message', function(data) {
 
 // Quand un nouveau client se connecte, on affiche l'information
 socket.on('nouveau_client', function(pseudo) {
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint la conversation !</em></li>');
   $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
 })
 
@@ -73,24 +73,33 @@ $('#formulaire_chat').submit(function () {
 
 // Ajoute un message venant de l'exterieur
 function insereMessage(pseudo, message) {
-  $('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li class="block-recu"> <div class="pseudo-recu">' + pseudo + '</div> <div class="message-recu">' + message + '</div></li>');
 }
 // Ajoute un message interne dans la page
 function insereMyMessage(pseudo, message) {
-  $('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li class="block-envoye"> <div class="pseudo-envoye">' + pseudo + '</div> <div class="message-envoye">' + message + '</div></li>');
 }
 
 // Quand un client se déconnecte, on affiche l'information
 socket.on('disconnect', function(pseudo) {
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitte la conversation !</em></li>');
   //$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 //////////////////////
 $('#invitation').click(function() {
   var dest = prompt('Entrez le mail du destinataire');
-  var url = 'http://'+location.hostname + ':3000';
+  var url = 'http://'+location.hostname + ':3000/room/main';
   socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
 });
+
+/////////////////////////////Micro Control
+//$('#micro').click(function(stream) { // stream is your local WebRTC stream
+//  var audioTracks = stream.getAudioTracks();
+//  for (var i = 0, l = audioTracks.length; i < l; i++) {
+//    audioTracks[i].enabled = !audioTracks[i].enabled;
+//  }
+//});
+
 ////////////////////////////////////////////////////////////////
 
 // render a remote video
