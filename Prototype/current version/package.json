@@ -27,7 +27,7 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rtc-io/rtcio-demo-quickconnect.git"
+    "url": "https://github.com/ALXRSS/WebRTC.git"
   },
   "keywords": [
     "webrtc",
@@ -35,6 +35,6 @@
   ],
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/rtc-io/rtcio-demo-quickconnect/issues"
+    "url": "https://github.com/ALXRSS/WebRTC/issues"
   }
 }

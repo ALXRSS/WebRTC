@@ -82,7 +82,7 @@ function insereMyMessage(pseudo, message) {
 
 // Quand un client se déconnecte, on affiche l'information
 socket.on('disconnect', function(pseudo) {
-  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitte la conversation !</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitt&eacute; la conversation !</em></li>');
   //$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
 //////////////////////
