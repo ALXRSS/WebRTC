@@ -419,3 +419,10 @@ header {
   float: right;
   cursor: pointer;
 }
+
+/* Notif */
+
+.notif {
+  vertical-align: top;
+  margin-left: -20px;
+}

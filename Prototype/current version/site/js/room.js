@@ -53,7 +53,7 @@ socket.on('recupererParticipants', function(participants) {
 
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
-  insereMessage(data.pseudo, data.message)
+  insereMessage(data.pseudo, data.message);
 })
 
 // Quand un nouveau client se connecte, on affiche l'information
@@ -74,7 +74,21 @@ $('#formulaire_chat').submit(function () {
 // Ajoute un message venant de l'exterieur
 function insereMessage(pseudo, message) {
   $('#list_chat').prepend('<li class="block-recu"> <div class="pseudo-recu">' + pseudo + '</div> <div class="message-recu">' + message + '</div></li>');
+  
+  // Supprime l'ancienne notification
+  $('#contener').children('.notif').remove();
+  // Affiche la nouvelle notification
+  $('#contener').append('<img id="notif" class="notif" alt="notif" src="../../img/notification.png" />');
+  // Si le chat est ouvert, on supprime la notif
+  if($('.st-menu-open').is(':visible')) {
+    $('#contener').children('.notif').remove();
+  }
 }
+// Lors de l'ouverture du chat, on supprime aussi la notif
+$('#contener').click(function() {
+  $('#contener').children('.notif').remove();
+});
+
 // Ajoute un message interne dans la page
 function insereMyMessage(pseudo, message) {
   $('#list_chat').prepend('<li class="block-envoye"> <div class="pseudo-envoye">' + pseudo + '</div> <div class="message-envoye">' + message + '</div></li>');
