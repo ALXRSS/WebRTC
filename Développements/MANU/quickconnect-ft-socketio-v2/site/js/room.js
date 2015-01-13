@@ -6,8 +6,6 @@ var qsa = require('fdom/qsa');
 var tweak = require('fdom/classtweak');
 var reRoomName = /^\/room\/(.*?)\/?$/;
 var room = location.pathname.replace(reRoomName, '$1').replace('/', '');
-var delivery = require('delivery');
-
 
 // local & remote video areas
 var local = qsa('.local')[0];
@@ -16,8 +14,6 @@ var remotes = qsa('.remote');
 // data channel & peers
 var channel;
 var peerMedia = {};
-
-
 
 // use google's ice servers
 var iceServers = [
@@ -40,30 +36,6 @@ var localMedia = media({
 // Connexion à socket.io
 var socket = io.connect('http://'+location.hostname + ':3000');
 
-socket.on('connect', function(){
-  console.log('1');
-    var delivery = new Delivery(socket);
-     console.log("2");
-    delivery.on('delivery.connect',function(delivery){
-       console.log("3");
-      $("input[type=submit]").click(function(evt){
-         console.log("4");
-        var file = $("input[type=file]")[0].files[0];
-         console.log("5");
-        delivery.send(file);
-         console.log("6");
-        evt.preventDefault();
-         console.log("7");
-      });
-       console.log("8");
-    });
-
-    delivery.on('send.success',function(fileUID){
-      console.log("file was successfully sent.");
-    });
-
-  });
-
 // On demande le pseudo, on l'envoie au serveur et on l'affiche dans le titre
 var pseudo = prompt('Quel est votre pseudo ?');
 socket.emit('nouveau_client', pseudo);
@@ -81,86 +53,68 @@ socket.on('recupererParticipants', function(participants) {
 
 // Quand on reçoit un message, on l'insère dans la page
 socket.on('message', function(data) {
-	insereMessage(data.pseudo, data.message)
+  insereMessage(data.pseudo, data.message);
 })
 
 // Quand un nouveau client se connecte, on affiche l'information
 socket.on('nouveau_client', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint le Chat !</em></li>');
-	$('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a rejoint la conversation !</em></li>');
+  $('#list_parts').prepend('<li><em>' + pseudo + '</em></li>');
 })
 
 // Lorsqu'on envoie le formulaire, on transmet le message et on l'affiche sur la page
 $('#formulaire_chat').submit(function () {
-	var message = $('#message').val();
-	socket.emit('message', message); // Transmet le message aux autres
-	insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
-	$('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
-	return false; // Permet de bloquer l'envoi "classique" du formulaire
+  var message = $('#message').val();
+  socket.emit('message', message); // Transmet le message aux autres
+  insereMyMessage(pseudo, message); // Affiche le message aussi sur notre page
+  $('#message').val('').focus(); // Vide la zone de Chat et remet le focus dessus
+  return false; // Permet de bloquer l'envoi "classique" du formulaire
 });
 
 // Ajoute un message venant de l'exterieur
 function insereMessage(pseudo, message) {
-	$('#list_chat').prepend('<li><strong>>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li class="block-recu"> <div class="pseudo-recu">' + pseudo + '</div> <div class="message-recu">' + message + '</div></li>');
+  
+  // Supprime l'ancienne notification
+  $('#contener').children('.notif').remove();
+  // Affiche la nouvelle notification
+  $('#contener').append('<img id="notif" class="notif" alt="notif" src="../../img/notification.png" />');
+  // Si le chat est ouvert, on supprime la notif
+  if($('.st-menu-open').is(':visible')) {
+    $('#contener').children('.notif').remove();
+  }
 }
+// Lors de l'ouverture du chat, on supprime aussi la notif
+$('#contener').click(function() {
+  $('#contener').children('.notif').remove();
+});
+
 // Ajoute un message interne dans la page
 function insereMyMessage(pseudo, message) {
-	$('#list_chat').prepend('<li style="color:green"><strong>> ' + pseudo + ' : </strong> ' + message + '</li>');
+  $('#list_chat').prepend('<li class="block-envoye"> <div class="pseudo-envoye">' + pseudo + '</div> <div class="message-envoye">' + message + '</div></li>');
 }
 
 // Quand un client se déconnecte, on affiche l'information
 socket.on('disconnect', function(pseudo) {
-	$('#list_chat').prepend('<li><em>' + pseudo + ' a quitte le Chat !</em></li>');
-	//$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
+  $('#list_chat').prepend('<li><em>' + pseudo + ' a quitt&eacute; la conversation !</em></li>');
+  //$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
+//////////////////////
+$('#invitation').click(function() {
+  var dest = prompt('Entrez le mail du destinataire');
+  var url = 'http://'+location.hostname + ':3000/room/main';
+  socket.emit('invitation', {pseudo: pseudo, destinataire: dest, url: url});
+});
 
-
-// Gérer les invitations !!!!!!!!!!!!!!!!!!!
-document.getElementById('invitation').onclick = function(){
-
-
-	//var nodemailer = require("nodemailer");
-  //  var audioTracks = stream.getAudioTracks();
-  // for (var i = 0, l = audioTracks.length; i < l; i++) {
-  //   alert('Track');
-  //   audioTracks[i].enabled = !audioTracks[i].enabled;
-  // }
-
-//console.log('Bonjour');
-
-// create reusable transport method (opens pool of SMTP connections)
-// var smtpTransport = nodemailer.createTransport("SMTP",{
-//     service: "Gmail",
-//     auth: {
-//         user: "webrtcevry@gmail.com",
-//         pass: "webrtcevry91"
-//     }
-// });
-
-// setup e-mail data with unicode symbols
-// var mailOptions = {
-//     from: "Fred Foo ✔ <webrtcevry@gmail.com>", // sender address
-//     to: "webrtcevry@gmail.com", // list of receivers
-//     subject: "Hello ✔", // Subject line
-//     text: "Hello world ✔", // plaintext body
-//     html: "<b>Hello world ✔</b>" // html body
-// }
-
-// send mail with defined transport object
-// smtpTransport.sendMail(mailOptions, function(error, response){
-//     if(error){
-//         console.log(error);
-//     }else{
-//         console.log("Message sent: " + response.message);
-//     }
-
-    // if you don't want to use this transport object anymore, uncomment following line
-    //smtpTransport.close(); // shut down the connection pool, no more messages
+/////////////////////////////Micro Control
+//$('#micro').click(function(stream) { // stream is your local WebRTC stream
+//  var audioTracks = stream.getAudioTracks();
+//  for (var i = 0, l = audioTracks.length; i < l; i++) {
+//    audioTracks[i].enabled = !audioTracks[i].enabled;
+//  }
 //});
 
-//	alert('hello');
-}
-
+////////////////////////////////////////////////////////////////
 
 // render a remote video
 function renderRemote(id, stream) {

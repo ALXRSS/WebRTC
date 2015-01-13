@@ -1,8 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 var express = require('express');
-var stylus = require('stylus');
-var nib = require('nib');
 var app = express();
 var server = require('http').Server(app);
 var browserify = require('browserify-middleware');
@@ -10,24 +8,13 @@ var serverPort = parseInt(process.env.PORT, 10) || 3000;
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var ent = require('ent');
+var nodemailer = require('nodemailer');
 
 // Liste des participants
 var participants = [];
 
 // create the switchboard
 var switchboard = require('rtc-switchboard')(server);
-
-// convert stylus stylesheets
-app.use(stylus.middleware({
-  src: __dirname + '/site',
-  compile: function(str, sourcePath) {
-    return stylus(str)
-      .set('filename', sourcePath)
-      .set('compress', false)
-      .use(nib());
-  }
-}));
-
 
 app.get('/', function(req, res) {
   res.redirect(req.uri.pathname + 'room/main/');
@@ -46,8 +33,20 @@ app.use(express.static(__dirname + '/site'));
 app.get('/rtc.io/primus.js', switchboard.library());
 app.get('/room/:roomname', function(req, res, next) {
   res.writeHead(200);
-  fs.createReadStream(path.resolve(__dirname, 'site', 'index.html')).pipe(res);
+  fs.createReadStream(path.resolve(__dirname, 'site', 'room.html')).pipe(res);
 });
+
+////////////////////////////
+// create reusable transporter object using SMTP transport
+var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'webrtcevry@gmail.com',
+        pass: 'webrtcevry91'
+    }
+});
+
+///////////////////////////////////
 
 // on utilise socket.io pour créer deux variables de session à transférer aux clients
 io.sockets.on('connection', function (socket, pseudo) {
@@ -70,18 +69,42 @@ io.sockets.on('connection', function (socket, pseudo) {
             socket.broadcast.emit('message', {pseudo: pseudo, message: message});
         });
     });
-	
-	// Vider l'objet à la déconnexion
-	socket.on('disconnect', function () {
-		socket.get('pseudo', function (error, pseudo) {
-			socket.broadcast.emit('disconnect', pseudo);
-			// mettre à jour la liste des participants et la renvoyer aux autres clients
-			var index = participants.indexOf(pseudo);
-			participants.splice(index, 1);
-			socket.broadcast.emit('recupererParticipants', participants);
-		});
-	});
-	
+  
+  // Vider l'objet à la déconnexion
+  socket.on('disconnect', function () {
+    socket.get('pseudo', function (error, pseudo) {
+      socket.broadcast.emit('disconnect', pseudo);
+      // mettre à jour la liste des participants et la renvoyer aux autres clients
+      var index = participants.indexOf(pseudo);
+      participants.splice(index, 1);
+      socket.broadcast.emit('recupererParticipants', participants);
+    });
+  });
+
+  ///////////////////
+    socket.on('invitation', function (data) {
+
+      // setup e-mail data with unicode symbols
+      var mailOptions = {
+        from: 'Web RTC <webrtcevry@gmail.com>', // sender address
+        to: data.destinataire, // list of receivers
+        subject: 'Invitation WebRTC', // Subject line
+        text: 'Bonjour, '+ data.pseudo +' vous invite à rejoindre une room web RTC à cette adresse : '+ data.url, // plaintext body
+        html: '<b>Bonjour, '+ data.pseudo +' vous invite à rejoindre une room web RTC à cette adresse : '+ data.url +'</b>' // html body
+      };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+           console.log(error);
+         }else{
+           console.log('Message sent: ' + info.response);
+          }
+        });
+    });
+
+    /////////////////
+  
 });
 
 // start the server
