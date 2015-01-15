@@ -15,6 +15,8 @@ var remotes = qsa('.remote');
 var channel;
 var peerMedia = {};
 
+ var activeStreams;
+
 // use google's ice servers
 var iceServers = [
   { url: 'stun:stun.l.google.com:19302' }
@@ -99,7 +101,7 @@ socket.on('disconnect', function(pseudo) {
   $('#list_chat').prepend('<li><em>' + pseudo + ' a quitt&eacute; la conversation !</em></li>');
   //$('#list_parts>li').remove( ":contains('" + pseudo +"')" );
 })
-//////////////////////
+
 $('#invitation').click(function() {
   var dest = prompt('Entrez le mail du destinataire');
   var url = 'http://'+location.hostname + ':3000/room/main';
@@ -107,18 +109,20 @@ $('#invitation').click(function() {
 });
 
 /////////////////////////////Micro Control
-//$('#micro').click(function(stream) { // stream is your local WebRTC stream
-//  var audioTracks = stream.getAudioTracks();
-//  for (var i = 0, l = audioTracks.length; i < l; i++) {
-//    audioTracks[i].enabled = !audioTracks[i].enabled;
-//  }
-//});
+$('#microphone').click(function(activeStreams) { // stream is your local WebRTC stream
 
-////////////////////////////////////////////////////////////////
+  alert('Je suis un micro');
+  console.log('Voici un micro');
+  var audioTracks = activeStreams.getAudioTracks();
+  for (var i = 0, l = audioTracks.length; i < l; i++) {
+    audioTracks[i].enabled = !audioTracks[i].enabled;
+  }
+});
+
 
 // render a remote video
 function renderRemote(id, stream) {
-  var activeStreams;
+ 
 
   // create the peer videos list
   peerMedia[id] = peerMedia[id] || [];
