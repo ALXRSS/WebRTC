@@ -28,7 +28,7 @@
 			</div>
 			<h1 id="titre">Prototype WebRTC <img src="../../img/webrtc_logo.png" alt="webrtc" /></h1>
 			<img id="invitation" class="invitation" alt="invite" src="../../img/addBtn.png" />
-			<div id="draggableBox" class="draggableBox">hello</div>
+			<div id="draggableBox">hello</div>
 			<div id="participants">
 				<img class="img_participants" src="../../img/peopleBtn.png" alt="participants" />
 				<fieldset id="zone_parts">
@@ -54,8 +54,17 @@
 
 			<div class="layout">
 				<div class="container">
-					<div class="remote"></div>
-					<div class="remote"></div>
+					    <div class="dropper">
+
+							<div class="draggable remote"></div>
+							
+						</div>
+
+						<div class="dropper">
+							
+							<div class="draggable remote"></div>
+							
+						</div>
 				</div>
 				<div class="local"></div>		
 			</div>
@@ -78,56 +87,77 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
 	
-	<script type="text/javascript"> // drag n drop
-	
-		(function() { // On utilise une IEF pour ne pas polluer l'espace global
-    
-			var storage = {}; // Contient l'objet du div en cours de déplacement
-			
-			
-			function addEvent(element, event, func) { // Une fonction pour gérer les événements sous tous les navigateurs
-				if (element.attachEvent) {
-					element.attachEvent('on' + event, func);
-				} else {
-					element.addEventListener(event, func, true);
-				}
-			}
-			
-			
-			function init() { // La fonction d'initialisation
-				var elements = document.getElementsByTagName('div'),
-					elementsLength = elements.length;
-				
-				for (var i = 0 ; i < elementsLength ; i++) {
-					if (elements[i].className === 'draggableBox') {
-				
-						addEvent(elements[i], 'mousedown', function(e) { // Initialise le drag & drop
-							var s = storage;
-							s.target = e.target || event.srcElement;
-							s.offsetX = e.clientX - s.target.offsetLeft;
-							s.offsetY = e.clientY - s.target.offsetTop;
-						});
-				
-						addEvent(elements[i], 'mouseup', function() { // Termine le drag & drop
-							storage = {};
-						});
-					}
-				}
-				
-				addEvent(document, 'mousemove', function(e) { // Permet le suivi du drag & drop
-					var target = storage.target;
-					
-					if (target) {
-						target.style.top = e.clientY - storage.offsetY + 'px';
-						target.style.left = e.clientX - storage.offsetX + 'px';
-					}
-				});
-			}
-			  
-			init(); // On initialise le code avec notre fonction toute prête
-    
-		})();
+	<script>
+    (function() {
+        
+        var dndHandler = {
+            
+            draggedElement: null, // Propriété pointant vers l'élément en cours de déplacement
+            
+            applyDragEvents: function(element) {
+                
+                element.draggable = true;
 
-	</script>
+                var dndHandler = this; // Cette variable est nécessaire pour que l'événement "dragstart" ci-dessous accède facilement au namespace "dndHandler"
+                
+                element.addEventListener('dragstart', function(e) {
+                    dndHandler.draggedElement = e.target; // On sauvegarde l'élément en cours de déplacement
+                    e.dataTransfer.setData('text/plain', ''); // Nécessaire pour Firefox
+                }, false);
+                
+            },
+     
+            applyDropEvents: function(dropper) {
+                
+                dropper.addEventListener('dragover', function(e) {
+                    e.preventDefault(); // On autorise le drop d'éléments
+                    this.className = 'dropper drop_hover'; // Et on applique le design adéquat à notre zone de drop quand un élément la survole
+                }, false);
+                
+                dropper.addEventListener('dragleave', function() {
+                    this.className = 'dropper'; // On revient au design de base lorsque l'élément quitte la zone de drop
+                });
+                
+                var dndHandler = this; // Cette variable est nécessaire pour que l'événement "drop" ci-dessous accède facilement au namespace "dndHandler"
+
+                dropper.addEventListener('drop', function(e) {
+
+                    var target = e.target,
+                        draggedElement = dndHandler.draggedElement, // Récupération de l'élément concerné
+                        clonedElement = draggedElement.cloneNode(true); // On créé immédiatement le clone de cet élément
+                    
+                    while(target.className.indexOf('dropper') == -1) { // Cette boucle permet de remonter jusqu'à la zone de drop parente
+                        target = target.parentNode;
+                    }
+
+                    target.className = 'dropper'; // Application du design par défaut
+                    
+                    clonedElement = target.appendChild(clonedElement); // Ajout de l'élément cloné à la zone de drop actuelle
+                    dndHandler.applyDragEvents(clonedElement); // Nouvelle application des événements qui ont été perdus lors du cloneNode()
+                    
+                    draggedElement.parentNode.removeChild(draggedElement); // Suppression de l'élément d'origine
+                    
+                });
+                
+            }
+     
+        };
+        
+        var elements = document.querySelectorAll('.draggable'),
+            elementsLen = elements.length;
+        
+        for(var i = 0 ; i < elementsLen ; i++) {
+            dndHandler.applyDragEvents(elements[i]); // Application des paramètres nécessaires aux élément déplaçables
+        }
+        
+        var droppers = document.querySelectorAll('.dropper'),
+            droppersLen = droppers.length;
+        
+        for(var i = 0 ; i < droppersLen ; i++) {
+            dndHandler.applyDropEvents(droppers[i]); // Application des événements nécessaires aux zones de drop
+        }
+
+    })();
+    </script>
 </body>
 </html>

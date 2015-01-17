@@ -427,23 +427,43 @@ header {
   margin-left: -20px;
 }
 
-/* drag n drop */
+/* Drag & Drop */
 
-.draggableBox
-{
-	position: absolute;
-	width: 80px; 
-	height: 60px;
-	padding-top: 10px;
-	text-align: center;
-	font-size: 40px;
-	background-color: #222;
-	color: #CCC;
-	cursor: move;
+.dropper {
+  margin: 5px;
+  width: 600px;
+  height: 250px;
+  background-color: #555;
+  border: 1px solid #111;
   
-	user-select: none; /* L'utilisateur ne pourra plus sélectionner le texte de l'élément qui possède cette propriété CSS */
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  
+  -moz-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  -o-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
 
+.drop_hover {
+  -moz-box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) inset;
+}
+
+.draggable {
+  display: inline-block;
+  margin: 5px;
+  width: 200px;
+  height: 200px;
+  cursor: move;
+  
+  -moz-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  -o-transition: all 200ms linear;
+  transition: all 200ms linear;
+  
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }

@@ -116,9 +116,9 @@ $('#invitation').click(function() {
 
 ////////////////////////////////////////////////////////////////
 
-$('#draggableBox').click(function() {
-  $('.remote').addClass("draggableBox"); // ne marche pas o_O
-});
+/*$('#draggableBox').click(function() {
+  $('video').addClass("draggable");
+});*/
 
 // render a remote video
 function renderRemote(id, stream) {
@@ -165,3 +165,16 @@ localMedia.once('capture', function(stream) {
     qsa('.chat').forEach(tweak('+open'));
   });
 });
+
+quickconnect(location.href + '../../', {
+    // debug: true,
+    room: room,
+    iceServers: iceServers
+  })
+  .addStream(stream)
+  .createDataChannel('chat')
+  .on('stream:added', renderRemote)
+  .on('stream:removed', removeRemote)
+  .on('channel:opened:chat', function(id, dc) {
+    qsa('.chat').forEach(tweak('+open'));
+  });
