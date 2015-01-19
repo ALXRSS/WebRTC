@@ -113,7 +113,7 @@ $('#microphone').click(function(activeStreams) { // stream is your local WebRTC 
 
   
   var audioTracks = activeStreams.getAudioTracks();
-  var videoTracks = localMediaStream.getVideoTracks();
+  var videoTracks = activeStreams.getVideoTracks();
   MediaStreamTracks.enabled=false;
   for (var i = 0, l = audioTracks.length; i < l; i++) {
     alert('Je suis un audio');
