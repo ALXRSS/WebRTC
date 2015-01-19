@@ -76,20 +76,20 @@ header {
   justify-content: space-between;
 }
 .remote video {
-  /*-webkit-box-flex: 1;
+  -webkit-box-flex: 1;
   -moz-box-flex: 1;
   -o-box-flex: 1;
   box-flex: 1;
   -webkit-flex: 1 1 100%;
   -ms-flex: 1 1 100%;
   flex: 1 1 100%;
-  width: 100%;*/
+  width: 100%;
   max-height: 90%;
-  margin: auto;
+  /*margin: auto;
   border-radius: 5px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
-  border: 1px solid #97d6eb;
+  border: 1px solid #97d6eb;*/
 }
 .local {
   display: -webkit-box;
