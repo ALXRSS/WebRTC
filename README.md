@@ -2,6 +2,7 @@
 
 ## Construire un client léger WebRTC
 
+* Echange N tiers - N tiers
 * Serveur Node.js : création du serveur commun (server.js)
 * Création du client léger (index.js, index.html)
 * Langage JavaScript
