@@ -111,13 +111,15 @@ $('#invitation').click(function() {
 /////////////////////////////Micro Control
 $('#microphone').click(function(activeStreams) { // stream is your local WebRTC stream
 
-  alert('Je suis un micro');
-  console.log('Voici un micro');
+  
   var audioTracks = activeStreams.getAudioTracks();
   var videoTracks = localMediaStream.getVideoTracks();
+  MediaStreamTracks.enabled=false;
   for (var i = 0, l = audioTracks.length; i < l; i++) {
+    alert('Je suis un audio');
+    console.log('Voici un audio');
     audioTracks[i].enabled = false;
-    videoTracks[i].enabled = false;
+    videoTracks[i].stop();
 
   }
 });
